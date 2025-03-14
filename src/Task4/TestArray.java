@@ -31,35 +31,35 @@ public class TestArray {
         } catch (MyArrayDataException e) {
             System.out.println("MyArrayDataException: " + e.getMessage());
         }
-        sumArray(stringArray);//for ArrayIndexOutOfBoundsException change condition in 'for': from < to <=
-    }
-
-    static void sumArray(String[][] stringArray) {
-        int[][] intArray = new int[4][4];
-        int sum = 0;
-        for (int i = 0; i < stringArray.length; i++) {
-            for (int j = 0; j < stringArray[i].length; j++) {
-                if (stringArray.length == 4 && stringArray[i].length == 4) {
-                    try {
-                        intArray[i][j] = Integer.parseInt(stringArray[i][j]);
-                    } catch (NumberFormatException e) {
-                        throw new MyArrayDataException("Value in cell [" + i + "][" + j + "] is not a number, " + e.getMessage());
-                    }
-                } else {
-                    throw new MyArraySizeException("Array size should be 4 x 4");
-                }
-            }
-        }
         try {
-            //for (int i = 0; i <= intArray.length; i++) {//example for ArrayIndexOutOfBoundsException
-            for (int i = 0; i < intArray.length; i++) {
-                for (int j = 0; j < intArray[i].length; j++) {
-                    sum += intArray[i][j];
-                }
-            }
-            System.out.println("Sum = " + sum);
+            sumArray(stringArray);//for ArrayIndexOutOfBoundsException change condition in 'for': from < to <=
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("ArrayIndexOutOfBoundsException: " + e.getMessage());
         }
+    }
+
+    static void sumArray(String[][] stringArray) {
+        if (stringArray.length != 4) {
+            throw new MyArraySizeException("Array size should be 4 x 4");
+        }
+
+        for (String[] row : stringArray) {
+            if (row.length != 4) {
+                throw new MyArraySizeException("Array size should be 4 x 4");
+            }
+        }
+
+        int sum = 0;
+        for (int i = 0; i < stringArray.length; i++) {
+            //for (int i = 0; i <= stringArray.length; i++) {
+            for (int j = 0; j < stringArray[i].length; j++) {
+                try {
+                    sum += Integer.parseInt(stringArray[i][j]);
+                } catch (NumberFormatException e) {
+                    throw new MyArrayDataException("Value in cell [" + i + "][" + j + "] is not a number, " + e.getMessage());
+                }
+            }
+        }
+        System.out.println("Sum = " + sum);
     }
 }
