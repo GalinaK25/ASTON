@@ -6,6 +6,10 @@ public class Factorial {
             throw new IllegalArgumentException("n! for n < 0 is impossible");
         }
 
+        if (n > 20) {
+            throw new IllegalArgumentException("n! calculation exceeds limits");
+        }
+
         long factorial = 1;//if (n=0 || n=1) {n! = 1}
         for (int i = 2; i <= n; i++) {
             factorial = factorial * i;
